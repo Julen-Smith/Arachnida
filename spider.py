@@ -6,7 +6,7 @@
 #    By: jsmith <jsmith@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/22 16:30:19 by jsmith            #+#    #+#              #
-#    Updated: 2022/07/22 18:53:41 by jsmith           ###   ########.fr        #
+#    Updated: 2022/07/22 18:57:23 by jsmith           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,9 +52,9 @@ def recursive_donwload(images, nbr , i):
 						pass
 		del images[i]
 		print("Numero de imagenes " + str(len(images)));
-		#headers te dice el tipo que es 
 		w = requests.get(image_link).headers
 		this_img = w['Content-Type']
+		#contemplar dentro de los metadatos el valor de titulo de this img.
 		new_str = this_img.split("/")
 		print("La string nueva es : " + new_str[1])
 		if new_str[1] != jpg and new_str[1] != jpeg and  new_str[1] != png and  new_str[1] != gif and  new_str[1] != bmp :
