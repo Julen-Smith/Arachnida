@@ -6,7 +6,7 @@
 #    By: jsmith <jsmith@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/22 16:30:19 by jsmith            #+#    #+#              #
-#    Updated: 2022/07/22 17:55:14 by jsmith           ###   ########.fr        #
+#    Updated: 2022/07/22 18:53:41 by jsmith           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,11 @@ del programa
 # Opción -r -l [N] : indica el nivel profundidad máximo de la descarga recursiva. En caso de no indicarse, será 5.
 # Opción -p [PATH] : indica la ruta donde se guardarán los archivos descargados. En caso de no indicarse, se utilizará ./data/.
 
-jpg = ".jpg"
-jpeg = ".jpeg"
-png = ".png"
-gif = ".gif"
-bmp = ".bmp"
+jpg = "jpg"
+jpeg = "jpeg"
+png = "png"
+gif = "gif"
+bmp = "bmp"
 
 def recursive_donwload(images, nbr , i):
 	print("Entro aqui por "+ str(i) + " vez")
@@ -53,15 +53,19 @@ def recursive_donwload(images, nbr , i):
 		del images[i]
 		print("Numero de imagenes " + str(len(images)));
 		#headers te dice el tipo que es 
-		r = requests.get(image_link).headers
-		dict.fromkeys(r)
-		print(r['Content-Type:'])
+		w = requests.get(image_link).headers
+		this_img = w['Content-Type']
+		new_str = this_img.split("/")
+		print("La string nueva es : " + new_str[1])
+		if new_str[1] != jpg and new_str[1] != jpeg and  new_str[1] != png and  new_str[1] != gif and  new_str[1] != bmp :
+			recursive_donwload(images, nbr +1, i);
+		r = requests.get(image_link).content
 		try:
 			r = str(r, 'utf-8')
-		except UnicodeDecodeError: 
-			#folder_name = "."
-			with open(".", "wb+") as f: 
-				f.write(r)
+		except UnicodeDecodeError:
+			folder_name = "."
+			with open(f"{folder_name}/images{i}." + new_str[1], "wb+") as f: 
+				f.write(r) 
 	except:
 		pass
 
